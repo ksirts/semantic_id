@@ -8,8 +8,6 @@ This implementation was used for experiments presented in the paper [Idea densit
 
     Sirts, K., Piguet, O., & Johnson, M. (2017). Idea density for predicting Alzheimer’s disease from transcribed speech. 
     In Proceedings of the 21st Conference on Computational Natural Language Learning (CoNLL 2017) (pp. 322-332).
-    
-or bibtex:
 
     @inproceedings{sirts2017idea,
       title={Idea density for predicting Alzheimer’s disease from transcribed speech},
