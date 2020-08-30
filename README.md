@@ -1,7 +1,7 @@
 # Semantic Idea Density (SID)
 
 The scripts in this repository implement the K-means clustering features and the SID feature
-following the description in [Vector-space topic models for detecting Alzheimer's disease](https://www.aclweb.org/anthology/P16-1221.pdf) by Yancheva and Ruczicz (2016)).
+following the description in [Vector-space topic models for detecting Alzheimer's disease](https://www.aclweb.org/anthology/P16-1221.pdf) by Yancheva and Ruczicz (2016).
 
 This implementation was used for experiments presented in the paper [Idea density for predicting Alzheimer’s disease from transcribed speech](https://www.aclweb.org/anthology/K17-1033.pdf) by Sirts et al. (2017). If you use this implementation, please cite the following reference:
 
