@@ -6,7 +6,7 @@ following the description in [Vector-space topic models for detecting Alzheimer'
 This implementation was used for experiments presented in the paper [Idea density for predicting Alzheimer’s disease from transcribed speech](https://www.aclweb.org/anthology/K17-1033.pdf) by Sirts et al. (2017). If you use this implementation, please cite the following reference:
 
 
-    Sirts, K., Piguet, O., & Johnson, M. (2017, August). Idea density for predicting Alzheimer’s disease from transcribed speech. 
+    Sirts, K., Piguet, O., & Johnson, M. (2017). Idea density for predicting Alzheimer’s disease from transcribed speech. 
     In Proceedings of the 21st Conference on Computational Natural Language Learning (CoNLL 2017) (pp. 322-332).
     
 or bibtex:
