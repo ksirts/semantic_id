@@ -43,4 +43,4 @@ In training mode, the relevant model parameters are saved into a json file. The 
 
     python sid_kmeans.py --input <input_file.jl> --output <output_file> --cluster --sid --mode predict --model <model_name>
     
-The parameters of a trained K-means model are read fromt the model file and used to compute features for evaluation data.
+The parameters of a trained K-means model are read from the model file and used to compute features for evaluation data.
