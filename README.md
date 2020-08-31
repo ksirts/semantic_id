@@ -25,7 +25,7 @@ The script can be used on both training and evaluation mode.
 
     python sid_kmeans.py --input <input_file.jl> --output <output_file> --cluster --sid --mode train --model <model_name>
     
-input_file.jl - json lines file that is expected to have the following attributes:
+input_file.jl - json lines file where each item is expected to have the following attributes:
 * id - subject id
 * label - group label for classification
 * num - unique id of the items of the same subject
