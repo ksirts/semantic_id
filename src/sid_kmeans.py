@@ -33,7 +33,6 @@ def whiten(obs, check_finite=True, std_dev=None):
     if std_dev is None:
         std_dev = np.std(obs, axis=0)
     zero_std_mask = std_dev == 0
-    print(zero_std_mask)
     if zero_std_mask.any():
         std_dev[zero_std_mask] = 1.0
         warnings.warn("Some columns have standard deviation zero. "
@@ -49,8 +48,8 @@ def get_parsed_args():
     parser.add_argument('-C', '--cluster', action="store_true", help="Compute K-means clustering features")
     parser.add_argument('-S', '--sid', action="store_true", help="Compute SID feature based on K-means clustering")
     parser.add_argument('-D', '--mode', default="train", choices=["train", "predict"], help="Compute the features in train or predict mode")
-    parser.add_argument('--id', default="")
     parser.add_argument('-M', '--model', default='/tmp/model')
+    parser.add_argument('-K', type=int, default=10, help="Number of K-means clusters")
     return parser.parse_args()
 
 
@@ -78,7 +77,7 @@ def train(args):
     std_dev, data = whiten(embeddings)
 
     # Perform K-means
-    kmeans = KMeans(n_clusters=10, tol=1e-5)
+    kmeans = KMeans(n_clusters=args.K, tol=1e-5)
     kmeans.fit(data)
     centers = kmeans.cluster_centers_
     clusters = kmeans.labels_
@@ -87,7 +86,7 @@ def train(args):
     d = np.linalg.norm(data - centers[clusters], axis=1)
     mu = []
     std = []
-    for i in range(10):
+    for i in range(args.K):
         mask = clusters == i
         mu.append(np.mean(d[mask], axis=0))
         std.append(np.std(d[mask], axis=0))
@@ -99,15 +98,14 @@ def train(args):
 
     # Open output file
     if args.output:
-        out_fn = args.output + args.id
-        of = open(out_fn, 'w')
+        of = open(args.output, 'w')
     else:
         of = sys.stdout
 
     # Print file header
     header = ["id", "label", "num"]
     if args.cluster:
-        header += ["C" + str(i) for i in range(10)]
+        header += ["C" + str(i) for i in range(args.K)]
     if args.sid:
         header.append("sid")
     print('\t'.join(header), file=of)
@@ -116,7 +114,7 @@ def train(args):
     with jsonlines.open(args.input) as f:
         for item in f:
             feats = [item["id"], item["label"], item["num"]]
-            dist = [[] for i in range(10)]
+            dist = [[] for i in range(args.K)]
             tokens = item["text"].strip().split()
             icus = 0
             for word in tokens:
@@ -145,13 +143,13 @@ def train(args):
               'std': std.tolist(), 
             }
 
-    model_fn = args.model + args.id + '.json'
+    model_fn = args.model + '.json'
     with open(model_fn, 'w') as f:
         json.dump(params, f, indent=2)
 
 
 def predict(args):
-    model_fn = args.model + args.id + '.json'
+    model_fn = args.model + '.json'
     with open(model_fn) as f:
         model = json.load(f)
 
@@ -165,7 +163,7 @@ def predict(args):
     _, data = whiten(embeddings, std_dev=std_dev)  
 
     # Construct the K-means model
-    kmeans = KMeans(n_clusters=10)
+    kmeans = KMeans(n_clusters=args.K)
     kmeans._n_threads = None  # Otherwise the predict method does not work when loading model parameters from file
     centers = np.array(model['centers'])
     kmeans.cluster_centers_ = centers
@@ -179,8 +177,7 @@ def predict(args):
 
     # Open output file
     if args.output:
-        out_fn = args.output + args.id
-        of = open(out_fn, 'w')
+        of = open(args.output, 'w')
     else:
         of = sys.stdout
 
@@ -196,7 +193,7 @@ def predict(args):
     with jsonlines.open(args.input) as f:
         for item in f:
             feats = [item["id"], item["label"], item["num"]]
-            dist = [[] for i in range(10)]
+            dist = [[] for i in range(args.K)]
             tokens = item["text"].strip().split()
             icus = 0
             for word in tokens:
