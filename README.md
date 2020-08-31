@@ -32,7 +32,9 @@ input_file.jl - json lines file that is expected to have the following attribute
 * text - the text itself
 
 output_file - a tab-separated file containing both the id, label and num columns as well as the computed features
+
 --cluster - a flag specfifying whether to compute cluster features, see Yancheva and Ruczicz (2016)
+
 --sid - a flag specifying whether to compute the SID feature, see Yancheva and Ruczicz (2016)
 
 In training mode, the relevant model parameters are saved into a json file. The default model file location is /tmp/model and that can be changed with the --model flag.
