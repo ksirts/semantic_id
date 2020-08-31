@@ -33,7 +33,7 @@ input_file.jl - json lines file where each item is expected to have the followin
 
 output_file - a tab-separated file containing both the id, label and num columns as well as the computed features
 
---cluster - a flag specfifying whether to compute cluster features, see Yancheva and Ruczicz (2016)
+--cluster - a flag specifying whether to compute cluster features, see Yancheva and Ruczicz (2016)
 
 --sid - a flag specifying whether to compute the SID feature, see Yancheva and Ruczicz (2016)
 
